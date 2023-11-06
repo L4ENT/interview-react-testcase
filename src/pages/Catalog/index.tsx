@@ -1,7 +1,6 @@
 import Layout from "@/components/Layout";
-import "./styles.scss";
 import ParamsBar from "./ParamsBar";
-import ItemsGrid from "./ItemsGrid";
+import Grid from "./Grid";
 import {
   createContext,
   useCallback,
@@ -61,7 +60,7 @@ function Catalog() {
     <Layout>
       <CatalogContext.Provider value={catalogContextValue}>
         <ParamsBar />
-        <ItemsGrid />
+        <Grid />
       </CatalogContext.Provider>
     </Layout>
   );

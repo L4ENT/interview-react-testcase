@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import './styles.scss'
-
+import Typography from "@/components/Typogrphy";
+import "./styles.scss";
 
 type NavigationItemProps = React.PropsWithChildren & {
   to: string;
-  icon?: React.ReactNode
+  icon?: React.ReactNode;
 };
 
 // TODO: Реализовать Navigation чтобы можно было прокидывать NavigationItem
@@ -13,7 +13,9 @@ function NavigationItem({ children, to, icon }: NavigationItemProps) {
   return (
     <Link to={to}>
       <span className="navigation-item__icon">{icon}</span>
-      <span className="navigation-item__text">{children}</span>
+      <Typography className="navigation-item__text" variant="body1">
+        {children}
+      </Typography>
     </Link>
   );
 }

@@ -1,0 +1,8 @@
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Creates three equal-width columns */
+  grid-gap: 32px; 
+  row-gap: 64px;
+  margin-top: 32px;
+  height: min-content;
+}

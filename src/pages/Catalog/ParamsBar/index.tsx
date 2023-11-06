@@ -1,32 +1,39 @@
 import { useContext, useEffect } from "react";
-import "./styles.scss";
 import { CatalogContext } from "..";
+import SelectInput from "@/components/SelectInput";
+import { CatalogSorting } from "../types";
+
+import "./styles.scss";
 
 function ParamsBar() {
-  const { params, loading, applyParams } = useContext(CatalogContext);
+  const { loading, applyParams } = useContext(CatalogContext);
 
   console.log(`ParamsBar again: ${new Date().getTime()}`);
 
   useEffect(() => {
-    console.log("mounted ParamsBar")
+    console.log("mounted ParamsBar");
   }, []);
 
+  const onSortingChange = (sorting: CatalogSorting) => {
+    applyParams({ sorting });
+  };
+
   return (
-    <div>
-      {params.sorting}
-      <button
+    <div className="params-bar">
+      <SelectInput<CatalogSorting>
+        options={[
+          {
+            value: "cheap_first",
+            label: "Порядок: сперва дешевле",
+          },
+          {
+            value: "expensive_first",
+            label: "Порядок: сперва дороже",
+          },
+        ]}
+        onChange={onSortingChange}
         disabled={loading}
-        onClick={() => {
-          applyParams({
-            sorting:
-              params.sorting === "cheap_first"
-                ? "expensive_first"
-                : "cheap_first",
-          });
-        }}
-      >
-        Сменить сортировку
-      </button>
+      />
     </div>
   );
 }
