@@ -1,0 +1,37 @@
+@import "@styles/variables";
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #cccccc;
+  max-width: 1200px;
+  margin: auto;
+  padding: 16px 0px 16px 0px;
+
+  @media screen and (min-width: 768px) and (max-width: 1200px) {
+    & {
+      margin: 0 $tablet-layout-margin;
+    }
+  }
+
+  @media screen and (max-width: 767px) {
+    padding: 32px 16px 0 16px;
+  }
+
+  & > * {
+    padding: 0;
+    margin: 0;
+  }
+
+  &__title {
+    color: $navigation-item-text-color;
+
+    @media screen and (max-width: 767px) {
+      & {
+        font-size: 18px;
+      }
+    }
+  }
+}

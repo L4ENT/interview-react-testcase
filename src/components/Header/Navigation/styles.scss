@@ -1,0 +1,24 @@
+@import "@styles/variables";
+
+.navigation {
+  display: flex;
+
+  & > ul {
+    display: flex;
+    gap: 32px;
+    & > li {
+      list-style-type: none;
+    }
+  }
+
+  &__item a {
+    font-weight: 400;
+    color: $navigation-item-text-color;
+    text-decoration: none;
+  }
+
+  &__item:hover {
+    text-decoration: underline;
+    text-decoration-color: $navigation-item-text-color;
+  }
+}

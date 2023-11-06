@@ -1,0 +1,21 @@
+.ty {
+    display: inline;
+
+    &--title {
+        font-size: 36px;
+        font-weight: 600;
+        line-height: 43.88px;
+    }
+
+    &--subtitle {
+        font-size: 24px;
+    }
+
+    &--body1 {
+        font-size: 16px;
+    }
+
+    &--body2 {
+        font-size: 14px;
+    }
+}
