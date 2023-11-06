@@ -1,16 +1,12 @@
 import Typography from "@/components/Typogrphy";
 import { AddToCart, AddToFavorite } from "@/components/Icons";
+import { ProductType } from "@/types/ProductType";
 
 import "./styles.scss";
 
-type GridItemProps = {
-  id: number;
-  title: string;
-  caption: string;
-  price: number;
-};
+type GridItemProps = ProductType;
 
-export function GridItem({ id, title, caption, price }: GridItemProps) {
+export function GridItem({ title, caption, price, image }: GridItemProps) {
   const formattedPrice = price.toLocaleString("en-US").replace(",", " ");
 
   return (
@@ -23,11 +19,7 @@ export function GridItem({ id, title, caption, price }: GridItemProps) {
           <AddToFavorite />
         </button>
       </div>
-      <img
-        className="grid-item__img"
-        src={`/images/product-${id}.jpg`}
-        alt="Card"
-      />
+      <img className="grid-item__img" src={image} alt="Card" />
       <div className="grid-item__content">
         <Typography
           className="grid-item__content__title"

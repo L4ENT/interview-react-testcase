@@ -65,6 +65,7 @@ function Grid() {
           title={item.title}
           caption={item.caption}
           price={item.price}
+          image={`/images/Product-${item.id}.jpg`}
         />
       ))}
     </div>
