@@ -1,6 +1,7 @@
 {
   "name": "interview-test",
   "version": "0.1.0",
+  "homepage": "https://webkotov.github.io/interview-react-testcase",
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -24,6 +25,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
@@ -58,6 +61,7 @@
     "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "gh-pages": "^6.0.0",
     "node-sass": "^7.0.3",
     "prettier": "^3.0.3",
     "sass-loader": "^13.3.2"
