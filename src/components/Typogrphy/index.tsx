@@ -16,7 +16,8 @@ const Typography = memo(function ({
   kind,
   variant,
   color,
-  className
+  className,
+  align
 }: TypographyProps) {
   let T = kind ?? "span";
 
@@ -26,7 +27,12 @@ const Typography = memo(function ({
 
   return (
     <T
-      className={`ty` + (variant ? ` ty--${variant}` : "") + (className ? ` ${className}` : "")}
+      className={
+        `ty` +
+        (variant ? ` ty--${variant}` : "") +
+        (className ? ` ${className}` : "") + 
+        (align ? ` ty--align--${align}` : "")
+      }
       style={{ color: color }}
     >
       {children}

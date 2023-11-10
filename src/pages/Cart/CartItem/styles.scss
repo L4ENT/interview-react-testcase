@@ -15,6 +15,12 @@
       width: 170px;
       height: 170px;
     }
+
+    @media screen and (max-width: 767px) {
+      & > img {
+        display: none;
+      }
+    }
   }
 
   &__title {
@@ -22,7 +28,7 @@
   }
 
   &__caption {
-    max-width: 500px;
+    max-width: 300px;
     color: #888888;
   }
 
@@ -30,6 +36,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    @media screen and (max-width: 767px) {
+      & {
+        gap: 16px;
+      }
+    }
   }
 
   &__buttons {
@@ -48,6 +60,7 @@
 }
 
 .cart-counter {
+  position: relative;
   display: flex;
   flex-direction: row;
   height: min-content;
@@ -56,12 +69,32 @@
   padding: 0 0 0 16px;
   background: #f7f6f6;
   border-radius: 6px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+
+  &__error {
+    position: absolute;
+    width: 50px;
+    bottom: -31px;
+    left: 0;
+    font-size: 10px;
+    color: red;
+    display: none;
+
+    &.visible {
+      display: block;
+    }
+  }
+
+  &.invalid {
+    outline: 1px solid red;
+  }
 
   &__input {
     height: min-content;
     border: none;
     outline: none;
-    width: 25px;
     background: none;
     font-size: 14px;
     font-weight: 600;

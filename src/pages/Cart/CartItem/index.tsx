@@ -1,8 +1,9 @@
 import "./styles.scss";
 import { ProductType } from "@/types/ProductType";
 import Typography from "@/components/Typogrphy";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { CounterDown, CounterUp } from "@/components/Icons";
+import { formatPrice } from "@/utils";
 
 type CartItemProps = {
   product: ProductType;
@@ -10,20 +11,77 @@ type CartItemProps = {
   max: number;
 };
 
-function CartItem({ product, min, max }: CartItemProps) {
-  const [counter, setCounter] = useState(min);
+/** 
+ Обязательно надо было разделить значение на counter и counterInputValue,
+ потому что в ином случае мы бы потеряли возможность вводить значение вручную.
 
-  const onIncrement = () => {
-    setCounter((prev) => (prev < max ? prev + 1 : max));
-  };
-  const onDecrement = () => {
-    setCounter((prev) => (prev > min ? prev - 1 : min));
-  };
+ Так у нас в conter всегда лежит только валидное число, а в counterInputValue
+ промежуточное значение инпута (в том числе пустая строка)
+
+ Но, тут есть нюанс. Получается, что нам всегда надо синхронизировать эти значения. 
+ Если бы я это реализовал через useEffect(() => { ...ставим инпут }, [counter]), то на при клике
+ на кнопки инкремента и декремента было бы 2 рендера:
+ 1. Рендер когда меняется сам counter
+ 2. Второй рендер из за сеттера внури useEffect
+
+ А мы знаем что два запущенных сеттера подряд не будет тригерить два рендера. Поэтому
+ я создал setValue в котором сразу ставится и counter и counterInputValue. 
+ И дальше остается только обеспечить чтобы во всех замыканиях был актуальный контекст. Для
+ этого у нас есть useCallback.
+*/
+
+function CartItem({ product, min, max }: CartItemProps) {
+  const [isValid, setIsValid] = useState(true);
+  const [counter, setCounter] = useState(min);
+  const [counterInputValue, setCounterInputValue] = useState(String(min));
+
+  const setValidation = useCallback(
+    (value: string) => {
+      if (value.length === 0) {
+        setIsValid(true);
+        return;
+      }
+      const numberValue = Number(value);
+      if (numberValue >= min && numberValue <= max) {
+        setIsValid(true);
+      } else {
+        setIsValid(false);
+      }
+    },
+    [min, max]
+  );
+
+  const setValue = useCallback(
+    (value: string | number) => {
+      const numberValue = Math.floor(Number(value));
+      setCounter(numberValue);
+      setCounterInputValue(String(value));
+      setValidation(String(value));
+    },
+    [setValidation]
+  );
+
+  const onIncrement = useCallback(() => {
+    const value = counter < max ? counter + 1 : max;
+    if (counter !== value) {
+      setValue(value);
+    }
+  }, [counter, max, setValue]);
+
+  const onDecrement = useCallback(() => {
+    const value = counter > min ? counter - 1 : min;
+    if (counter !== value) {
+      setValue(value);
+    }
+  }, [counter, min, setValue]);
+
+  console.log(`CartItem Render: `, new Date().getTime());
+  console.log(`CartItem Counter: `, counter);
 
   return (
     <div className="cart-item">
       <div className="cart-item__card">
-        <img src={product.image} />
+        <img src={product.image} alt="" />
         <div className="cart-item__content">
           <Typography
             className="cart-item__title"
@@ -40,7 +98,7 @@ function CartItem({ product, min, max }: CartItemProps) {
             {product.caption}
           </Typography>
           <Typography kind="span" variant="body1">
-            {product.price}
+            {formatPrice(product.price)} руб.
           </Typography>
 
           <div className="cart-item__buttons">
@@ -49,22 +107,34 @@ function CartItem({ product, min, max }: CartItemProps) {
           </div>
         </div>
       </div>
-      <div className="cart-counter">
+      <div className={"cart-counter" + (!isValid ? ` invalid` : "")}>
+        <span className={"cart-counter__error" + (!isValid ? ` visible` : "")}>
+          Допустимо от {min} до {max}
+        </span>
         <input
           className="cart-counter__input"
           type="text"
-          value={counter}
-          onChange={(event) =>
-            setCounter((prevCount) => {
-              const value = Number(event.target.value);
-              
-              if (value >= min && value <= max) {
-                return value;
-              } else {
-                return prevCount;
-              }
-            })
-          }
+          value={counterInputValue}
+          size={counterInputValue.length > 0 ? counterInputValue.length : 1}
+          onBlur={() => {
+            if (counterInputValue.length === 0) {
+              setValue(1);
+            }
+          }}
+          onChange={(event) => {
+            let stringValue = event.target.value;
+            const value = Number(event.target.value);
+            // Если прилетело не число а что-то другое то просто игнорируем
+            if (stringValue.length > 0 && isNaN(value)) {
+              return;
+            }
+
+            if (stringValue.length > 0) {
+              stringValue = Math.floor(value).toString();
+            }
+
+            setValue(stringValue);
+          }}
         />
         <div className="cart-counter__buttons">
           <button onClick={onIncrement}>

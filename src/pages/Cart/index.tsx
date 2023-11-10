@@ -2,6 +2,8 @@ import Layout from "@/components/Layout";
 
 import "./styles.scss";
 import CartItem from "./CartItem";
+import Button from "@/components/Button";
+import { CheckoutForm } from "./CheckoutForm";
 
 const cartItems = [
   {
@@ -34,8 +36,17 @@ function Cart() {
           {cartItems.map((item) => (
             <CartItem key={item.id} product={item} min={1} max={10} />
           ))}
+
+          <div className="cart__buttons">
+            <Button className="cart__button" variant="white">
+              Очистить корзину
+            </Button>
+            <Button className="cart__button" variant="black">
+              Продолжить покупки
+            </Button>
+          </div>
         </div>
-        <div className="checkout-form"></div>
+        <CheckoutForm />
       </div>
     </Layout>
   );

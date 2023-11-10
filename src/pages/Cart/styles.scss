@@ -1,7 +1,9 @@
 .cart {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   margin-top: 32px;
+  gap: 32px;
 
   &__items {
     display: flex;
@@ -14,8 +16,33 @@
       justify-content: space-between;
     }
   }
-}
 
-.checkout-form {
-  display: flex;
+  &__buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 16px;
+    margin-bottom: 32px;
+
+    @media screen and (max-width: 767px) {
+      & {
+        justify-content: space-between;
+      }
+    }
+  }
+
+  &__button {
+    @media screen and (min-width: 768px) and (max-width: 1200px) {
+      &{
+        min-width: 200px;
+      }
+    }
+
+    @media screen and (max-width: 767px) {
+      &.button {
+        font-size: 12px;
+        min-width: 163px;
+      }
+    }
+  }
 }

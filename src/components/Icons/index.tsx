@@ -118,8 +118,8 @@ export function CounterUp() {
         <path
           d="M6 9L8 7L10 9"
           stroke="#CACDD8"
-          stroke-width="1.6"
-          stroke-linecap="round"
+          strokeWidth="1.6"
+          strokeLinecap="round"
         />
       </svg>
     </Icon>
@@ -138,8 +138,8 @@ export function CounterDown() {
       <path
         d="M10 7L8 9L6 7"
         stroke="#CACDD8"
-        stroke-width="1.6"
-        stroke-linecap="round"
+        strokeWidth="1.6"
+        strokeLinecap="round"
       />
     </svg>
   );

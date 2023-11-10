@@ -3,11 +3,12 @@ import { AddToCart, AddToFavorite } from "@/components/Icons";
 import { ProductType } from "@/types/ProductType";
 
 import "./styles.scss";
+import { formatPrice } from "@/utils";
 
 type GridItemProps = ProductType;
 
 export function GridItem({ title, caption, price, image }: GridItemProps) {
-  const formattedPrice = price.toLocaleString("en-US").replace(",", " ");
+  const formattedPrice = formatPrice(price);
 
   return (
     <div className="grid-item">
