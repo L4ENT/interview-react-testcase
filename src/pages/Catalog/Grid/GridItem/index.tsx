@@ -4,16 +4,33 @@ import { ProductType } from "@/types/ProductType";
 
 import "./styles.scss";
 import { formatPrice } from "@/utils";
+import { useCallback, useMemo } from "react";
+import CartStorage from "@/lib/CartStorage";
 
 type GridItemProps = ProductType;
 
-export function GridItem({ title, caption, price, image }: GridItemProps) {
+export function GridItem({ id, title, caption, price, image }: GridItemProps) {
   const formattedPrice = formatPrice(price);
+
+  const item = useMemo(
+    () => ({
+      id,
+      title,
+      caption,
+      price,
+      image,
+    }),
+    [id, title, caption, price, image]
+  );
+
+  const handleAddToCart = useCallback(() => {
+    CartStorage.addItem(item);
+  }, [item]);
 
   return (
     <div className="grid-item">
       <div className="grid-item__buttons">
-        <button>
+        <button onClick={handleAddToCart}>
           <AddToCart />
         </button>
         <button>

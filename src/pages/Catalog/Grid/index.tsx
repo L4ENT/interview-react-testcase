@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CatalogContext } from "..";
 import { GridItem } from "./GridItem";
 
@@ -48,20 +48,25 @@ const data = [
 ];
 
 function Grid() {
-  const { params, loading, applyLoading } = useContext(CatalogContext);
+  const { params, applyLoading } = useContext(CatalogContext);
+  const [items, setItems] = useState(data);
 
   useEffect(() => {
     applyLoading(true);
-    setTimeout(() => {
-      applyLoading(false);
-    }, 1500);
+    if (params.sorting === "cheap_first") {
+      setItems((prevItems) => [...prevItems].sort((a, b) => a.price - b.price));
+    } else {
+      setItems((prevItems) => [...prevItems].sort((a, b) => b.price - a.price));
+    }
+    applyLoading(false);
   }, [params, applyLoading]);
 
   return (
     <div className="items-grid">
-      {data.map((item) => (
+      {items.map((item) => (
         <GridItem
           id={item.id}
+          key={item.id}
           title={item.title}
           caption={item.caption}
           price={item.price}

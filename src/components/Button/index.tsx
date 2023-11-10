@@ -6,9 +6,10 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: "normal" | "large";
 };
 
-function Button({ children, variant, className, size }: ButtonProps) {
+function Button({ children, variant, className, size, ...props }: ButtonProps) {
   return (
     <button
+      {...props}
       className={
         `button button--${variant ? variant : "transparent"}` +
         ` button--size--${size ? size : "normal"}` +

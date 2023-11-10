@@ -4,11 +4,14 @@ import Typography from "@/components/Typogrphy";
 import { useCallback, useState } from "react";
 import { CounterDown, CounterUp } from "@/components/Icons";
 import { formatPrice } from "@/utils";
+import CartStorage from "@/lib/CartStorage";
 
 type CartItemProps = {
   product: ProductType;
   min: number;
   max: number;
+  initialAmount?: number;
+  onDelete: (id: number) => void;
 };
 
 /** 
@@ -30,10 +33,21 @@ type CartItemProps = {
  этого у нас есть useCallback.
 */
 
-function CartItem({ product, min, max }: CartItemProps) {
+function CartItem({
+  product,
+  min,
+  max,
+  initialAmount,
+  onDelete,
+}: CartItemProps) {
   const [isValid, setIsValid] = useState(true);
-  const [counter, setCounter] = useState(min);
-  const [counterInputValue, setCounterInputValue] = useState(String(min));
+
+  const initialAmountValue = initialAmount ?? min;
+
+  const [counter, setCounter] = useState(initialAmountValue);
+  const [counterInputValue, setCounterInputValue] = useState(
+    String(initialAmountValue)
+  );
 
   const setValidation = useCallback(
     (value: string) => {
@@ -44,8 +58,10 @@ function CartItem({ product, min, max }: CartItemProps) {
       const numberValue = Number(value);
       if (numberValue >= min && numberValue <= max) {
         setIsValid(true);
+        return true;
       } else {
         setIsValid(false);
+        return false;
       }
     },
     [min, max]
@@ -56,9 +72,13 @@ function CartItem({ product, min, max }: CartItemProps) {
       const numberValue = Math.floor(Number(value));
       setCounter(numberValue);
       setCounterInputValue(String(value));
-      setValidation(String(value));
+      const isValid = setValidation(String(value));
+
+      if (isValid) {
+        CartStorage.setAmount(product.id, numberValue);
+      }
     },
-    [setValidation]
+    [setValidation, product]
   );
 
   const onIncrement = useCallback(() => {
@@ -74,6 +94,10 @@ function CartItem({ product, min, max }: CartItemProps) {
       setValue(value);
     }
   }, [counter, min, setValue]);
+
+  const deleteHandler: React.MouseEventHandler = useCallback(() => {
+    onDelete(product.id);
+  }, [onDelete, product]);
 
   console.log(`CartItem Render: `, new Date().getTime());
   console.log(`CartItem Counter: `, counter);
@@ -103,7 +127,7 @@ function CartItem({ product, min, max }: CartItemProps) {
 
           <div className="cart-item__buttons">
             <button>Избранное</button>
-            <button>Удалить</button>
+            <button onClick={deleteHandler}>Удалить</button>
           </div>
         </div>
       </div>
