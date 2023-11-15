@@ -61,7 +61,7 @@ function Cart() {
                 Очистить корзину
               </Button>
             )}
-            <Link to='/'>
+            <Link to='/interview-react-testcase'>
               <Button className="cart__button" variant="black">
                 Продолжить покупки
               </Button>

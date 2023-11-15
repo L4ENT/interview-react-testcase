@@ -8,10 +8,17 @@ function Navigation() {
     <nav className="navigation">
       <ul>
         <li className="navigation__item">
-          <NavigationItem icon={<CatalogIcon/>} to="/">Каталог</NavigationItem>
+          <NavigationItem icon={<CatalogIcon />} to="/interview-react-testcase">
+            Каталог
+          </NavigationItem>
         </li>
         <li className="navigation__item">
-          <NavigationItem icon={<CartIcon/>} to="/cart">Корзина</NavigationItem>
+          <NavigationItem
+            icon={<CartIcon />}
+            to="/interview-react-testcase/cart"
+          >
+            Корзина
+          </NavigationItem>
         </li>
       </ul>
     </nav>
