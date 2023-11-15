@@ -15,22 +15,22 @@ type CartItemProps = {
 };
 
 /** 
- Обязательно надо было разделить значение на counter и counterInputValue,
- потому что в ином случае мы бы потеряли возможность вводить значение вручную.
+It was essential to separate the value into counter and counterInputValue, because otherwise
+we would lose the ability to enter the value manually.
 
- Так у нас в conter всегда лежит только валидное число, а в counterInputValue
- промежуточное значение инпута (в том числе пустая строка)
+This way, in counter we always have only a valid number, and in 
+counterInputValue we have the intermediate input value (including an empty string).
 
- Но, тут есть нюанс. Получается, что нам всегда надо синхронизировать эти значения. 
- Если бы я это реализовал через useEffect(() => { ...ставим инпут }, [counter]), то на при клике
- на кнопки инкремента и декремента было бы 2 рендера:
- 1. Рендер когда меняется сам counter
- 2. Второй рендер из за сеттера внури useEffect
+However, there is a nuance. It turns out that we always need to synchronize these values. 
+If I had implemented this using useEffect(() => { ...set input }, [counter]), 
+then on clicking the increment and decrement buttons, there would be two renders:
+1. A render when the counter itself changes.
+2. A second render due to the setter inside useEffect.
 
- А мы знаем что два запущенных сеттера подряд не будет тригерить два рендера. Поэтому
- я создал setValue в котором сразу ставится и counter и counterInputValue. 
- И дальше остается только обеспечить чтобы во всех замыканиях был актуальный контекст. Для
- этого у нас есть useCallback.
+And we know that two consecutive setters being triggered will not cause two renders. 
+Therefore, I created setValue in which both counter and counterInputValue are set at once.
+Then, it only remains to ensure that in all closures there is the current context. 
+For this, we have useCallback.
 */
 
 function CartItem({
@@ -148,7 +148,7 @@ function CartItem({
           onChange={(event) => {
             let stringValue = event.target.value;
             const value = Number(event.target.value);
-            // Если прилетело не число а что-то другое то просто игнорируем
+
             if (stringValue.length > 0 && isNaN(value)) {
               return;
             }

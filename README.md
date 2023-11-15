@@ -1,7 +1,14 @@
-# Выбор технологий  
-В данном проект применялся стандартный стек без особоенностей
-- TS/React 18 - лучший сетап из возможных на сегодняшний день
-- React Router для навигации между страницами
-- Formik - для быстрой реализации формы в корзине. Если потрубется отправка формы
-- Craco - чтобы корректно отрабатывали алиасы для TS
-- Решил не испозовать в Redux в данном проекте т.к. он был бы избыочен. В этом задании обошелся использованием Context API - получилось аккуратное решение без подтягивания лишних зависимостей. 
+## What is it?
+
+This is just a test task for a React position at SkyEng company
+
+## Task description
+
+- Based on a Figma design, develop the web pages for a product catalog and a shopping cart.
+- Implement sorting functionality for the product catalog by price (ascending and descending).
+- Implement the feature to add products to the shopping cart.
+- Implement the feature to edit the contents of the shopping cart.
+- Create a separate component for a shopping cart item, which takes a product as a parameter and the maximum and minimum permissible quantity of this product in the cart.
+
+## Demo
+https://webkotov.github.io/interview-react-testcase/

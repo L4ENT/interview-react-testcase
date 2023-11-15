@@ -24,7 +24,6 @@ export const CatalogContext = createContext<CatalogContextValue>({
 });
 
 function Catalog() {
-  // TODO: Убрать
   useEffect(() => {
     console.log(`Catalog mounted`);
   }, []);

@@ -8,7 +8,6 @@ type NavigationItemProps = React.PropsWithChildren & {
   icon?: React.ReactNode;
 };
 
-// TODO: Реализовать Navigation чтобы можно было прокидывать NavigationItem
 function NavigationItem({ children, to, icon }: NavigationItemProps) {
   return (
     <Link to={to}>

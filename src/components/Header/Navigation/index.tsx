@@ -2,7 +2,6 @@ import "./styles.scss";
 import NavigationItem from "./NavigationItem";
 import { CartIcon, CatalogIcon } from "@/components/Icons";
 
-// TODO: Реализовать Navigation чтобы можно было прокидывать NavigationItem
 function Navigation() {
   return (
     <nav className="navigation">
