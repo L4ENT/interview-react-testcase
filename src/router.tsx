@@ -5,11 +5,11 @@ import Cart from "./pages/Cart";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/interview-react-testcase",
     element: <Catalog/>,
   },
   {
-    path: "/cart",
+    path: "/interview-react-testcase/cart",
     element: <Cart/>,
   },
 ]);
